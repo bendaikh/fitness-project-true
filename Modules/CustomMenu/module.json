@@ -1,0 +1,11 @@
+{
+    "name": "CustomMenu",
+    "alias": "custommenu",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\CustomMenu\\app\\Providers\\CustomMenuServiceProvider"
+    ],
+    "files": []
+}

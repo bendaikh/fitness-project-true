@@ -1,0 +1,13 @@
+<p>Hi {{ user_name }},</p>
+<p>We hope you’ve been enjoying your subscription!</p>
+<p>This is a reminder that your subscription will expire soon.</p>
+<p><strong>Details:</strong></p>
+<ul>
+    <li><strong>Start Date:</strong> {{ subscription_start_date }}</li>
+    <li><strong>Renew Date:</strong> {{ subscription_renew_date }}</li>
+</ul>
+<p>To continue enjoying uninterrupted access to our services, please consider renewing your subscription before it expires.</p>
+<p>If you have already renewed, please disregard this email.</p>
+<p>Thank you for choosing our services!</p>
+<p>Best regards,</p>
+<p><strong>{{ app_name }}</strong></p>

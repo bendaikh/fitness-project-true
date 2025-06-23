@@ -1,0 +1,11 @@
+{
+    "name": "OurTeam",
+    "alias": "ourteam",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\OurTeam\\app\\Providers\\OurTeamServiceProvider"
+    ],
+    "files": []
+}

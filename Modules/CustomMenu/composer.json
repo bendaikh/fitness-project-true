@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/custommenu",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\CustomMenu\\": "",
+            "Modules\\CustomMenu\\App\\": "app/",
+            "Modules\\CustomMenu\\Database\\Factories\\": "database/factories/",
+            "Modules\\CustomMenu\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\CustomMenu\\Tests\\": "tests/"
+        }
+    }
+}

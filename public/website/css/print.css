@@ -1,0 +1,94 @@
+@media print {
+
+    body {
+        margin: 0;
+        padding: 0;
+        line-height: normal;
+    }
+
+    .main_menu,
+    .wsus__breadcrumb,
+    .wsus__social_media,
+    .wsus__footer,
+    .active-progress,
+    .dashboard_sidebar,
+    .print_btn,
+    header {
+        display: none;
+    }
+
+    .wsus__dashboard_main_contant {
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+
+    .wsus__dashboard_main_contant h4 {
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .dashboard_content {
+        width: 100% !important;
+    }
+
+    .wsus__dashboard_invoice {
+        padding: 0 !important;
+        border: none;
+        margin-top: 50px;
+        width: 100% !important;
+    }
+
+    .wsus__dashboard_profile {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        padding-left: 0px !important;
+        padding-right: 0 !important;
+    }
+
+    .col-xl-5 {
+        width: 41.66666667%;
+    }
+
+    .col-xl-2 {
+        width: 16.66666667%;
+    }
+
+
+    .w-100 {
+        width: 100% !important;
+    }
+
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+
+    img {
+        width: 100% !important;
+        min-width: 150px !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+
+    .container {
+        width: 100% !important;
+    }
+
+    .wpcc-container {
+        display: none;
+    }
+
+    .wsus__dashboard_invoice .table tfoot tr .total_amount {
+        width: auto !important;
+    }
+
+    .wsus__dashboard_invoice_right h5,
+    .wsus__dashboard_invoice_right p {
+        text-align: right !important;
+    }
+
+
+}

@@ -1,0 +1,36 @@
+@section('admin-content')
+    <form
+       {{-- Media File input --}}
+        @if (Module::isEnabled('Media'))
+            <div class="form-group col-md-8 offset-md-2">
+                {{-- Add input --}}
+                <x-media::media-input name="image"  />
+                <x-media::media-input name="image[]" multiple="yes" />
+
+
+                {{-- Edit input --}}
+                <x-media::media-input name="image" :dataImages="$myArray" />
+                <x-media::media-input name="image[]" multiple="yes" :dataImages="$myArray" />
+            </div>
+        @endif
+    </form>
+
+    {{-- Media Modal Show --}}
+    @if (Module::isEnabled('Media'))
+        @stack('media_list_html')
+    @endif
+@endsection
+
+{{-- Media Js --}}
+@push('js')
+    @if (Module::isEnabled('Media'))
+        @stack('media_libary_js')
+    @endif
+@endpush
+
+{{-- Media Css --}}
+@push('css')
+    @if (Module::isEnabled('Media'))
+        @stack('media_libary_css')
+    @endif
+@endpush

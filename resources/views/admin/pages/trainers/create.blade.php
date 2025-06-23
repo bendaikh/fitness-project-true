@@ -1,0 +1,237 @@
+@extends('admin.master_layout')
+@section('title')
+    <title>{{ __('Create Trainer') }}</title>
+@endsection
+
+@section('admin-content')
+    <div class="main-content">
+        <section class="section">
+            <div class="section-header">
+                <h1>{{ __('Create Trainer') }}</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a>
+                    </div>
+                    <div class="breadcrumb-item active"><a
+                            href="{{ route('admin.trainer.index') }}">{{ __('Trainer List') }}</a>
+                    </div>
+                    <div class="breadcrumb-item">{{ __('Create Trainer') }}</div>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="mt-4 row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <h4><i class="fas fa-plus-square"></i> {{ __('Create Trainer') }}</h4>
+                                <div>
+                                    <a href="{{ route('admin.trainer.index') }}" class="btn btn-primary"><i
+                                            class="fa fa-arrow-left"></i> {{ __('Back') }}</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form action="{{ route('admin.trainer.store') }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="section-title">{{ __('Login Information') }}</div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>{{ __('Name') }} <span class="text-danger">*</span></label>
+                                            <input type="text" id="name" class="form-control" name="name"
+                                                value="{{ old('name') }}">
+                                            @error('name')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>{{ __('Phone') }} <span class="text-danger">*</span></label>
+                                            <input type="tel" id="phone" class="form-control" name="phone"
+                                                value="{{ old('phone') }}">
+                                            @error('phone')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>{{ __('Email') }} <span class="text-danger">*</span></label>
+                                            <input type="email" id="email" class="form-control" name="email"
+                                                value="{{ old('email') }}">
+                                            @error('email')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>{{ __('Password') }} <span class="text-danger">*</span></label>
+                                            <input type="password" id="password" class="form-control" name="password"
+                                                value="{{ old('password') }}">
+                                            @error('password')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="section-title">{{ __('Personal Information') }}</div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>{{ __('Address') }}</label>
+                                            <input type="text" id="address" class="form-control" name="address"
+                                                value="{{ old('address') }}">
+                                            @error('address')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="gender">{{ __('Gender') }}</label>
+                                            <select name="gender" id="gender" class="form-select">
+                                                <option value="">{{ __('Select') }}</option>
+                                                <option value="male">{{ __('Male') }}</option>
+                                                <option value="female">{{ __('Female') }}</option>
+                                            </select>
+                                            @error('gender')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="section-title">{{ __('More Information') }}</div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>{{ __('Working Hours Per Week') }}({{ __('Hours') }})</label>
+                                            <input type="number" id="hours_per_week" class="form-control"
+                                                name="hours_per_week" value="{{ old('hours_per_week') }}">
+                                            @error('hours_per_week')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>{{ __('Specialty') }}<span class="text-danger">*</span></label>
+                                            <select name="specialty_id" id="specialty_id" class="form-select select2">
+                                                <option value="" selected disabled>{{ __('Select Specialty') }}
+                                                </option>
+                                                @foreach ($specialties as $specialty)
+                                                    <option value="{{ $specialty->id }}">{{ $specialty->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('specialty_id')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            <label>{{ __('Skills') }}</label>
+                                            <input type="text" id="skills" class="form-control tagify tags"
+                                                name="skills" value="{{ old('skills') }}">
+                                            @error('skills')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>{{ __('Description') }}</label>
+                                            <textarea type="textarea" id="description" class="form-control summernote" name="description">{{ old('description') }}</textarea>
+                                            @error('description')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="section-title">{{ __('Social Handle') }}</div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>{{ __('Facebook') }}({{ __('Link') }})</label>
+                                            <div class="input-group">
+                                                <input type="text" id="facebook_link"
+                                                    class="form-control currency w-75" name="facebook_link"
+                                                    value="{{ old('facebook_link') }}">
+                                                <div class="input-group-prepend w-25">
+                                                    <input class="icp icp-auto form-control" name="facebook_icon"
+                                                        type="text" />
+                                                </div>
+                                            </div>
+                                            @error('facebook_link')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>{{ __('Instagram') }}({{ __('Link') }})</label>
+                                            <div class="input-group">
+                                                <input type="text" id="instagram_link"
+                                                    class="form-control currency w-75" name="instagram_link"
+                                                    value="{{ old('instagram_link') }}">
+                                                <div class="input-group-prepend w-25">
+                                                    <input class="icp icp-auto form-control" name="instagram_icon"
+                                                        type="text" />
+                                                </div>
+                                            </div>
+                                            @error('instagram_link')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>{{ __('Twitter') }}({{ __('Link') }})</label>
+                                            <div class="input-group">
+                                                <input type="text" id="twitter_link"
+                                                    class="form-control currency w-75" name="twitter_link"
+                                                    value="{{ old('twitter_link') }}">
+                                                <div class="input-group-prepend w-25">
+                                                    <input class="icp icp-auto form-control" name="twitter_icon"
+                                                        type="text" />
+                                                </div>
+                                            </div>
+                                            @error('twitter_link')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="section-title">{{ __('Profile Image') }}</div>
+                                        </div>
+
+                                        <div class="form-group col-md-8">
+                                            <label>{{ __('Image') }}</label>
+                                            <div id="preview" class="image-preview">
+                                                <label for="upload" id="label">{{ __('Image') }}</label>
+                                                <input type="file" name="image" id="upload">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-8">
+                                            <label>
+                                                <input type="hidden" value="0" name="status"
+                                                    class="custom-switch-input">
+                                                <input type="checkbox" value="1" name="status"
+                                                    class="custom-switch-input" checked>
+                                                <span class="custom-switch-indicator"></span>
+                                                <span class="custom-switch-description">{{ __('Status') }}<span
+                                                        class="text-danger">*</span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="text-center col-md-8">
+                                            <x-admin.save-button :text="__('Save')"></x-admin.save-button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+@endsection
+
+@push('js')
+    <script>
+        (function($) {
+            "use strict";
+            $(document).ready(function() {
+                $("#title").on("keyup", function(e) {
+                    $("#slug").val(convertToSlug($(this).val()));
+                })
+                $('.image').on('change', function() {
+                    $('.preview').removeClass('d-none');
+                })
+                $('.icp-auto').iconpicker();
+                setupImagePreview('upload', 'preview');
+            });
+        })(jQuery);
+    </script>
+@endpush
