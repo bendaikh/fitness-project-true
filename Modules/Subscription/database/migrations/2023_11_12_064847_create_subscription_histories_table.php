@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('payment_method');
             $table->string('payment_status')->default('pending');
             $table->string('transaction')->nullable();
+            $table->string('invoice_pdf')->nullable();
             $table->timestamps();
         });
     }

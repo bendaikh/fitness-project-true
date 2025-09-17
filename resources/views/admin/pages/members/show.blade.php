@@ -111,10 +111,11 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th width="25%">{{ __('Plan Name') }}</th>
-                                            <th width="25%">{{ __('Type') }}</th>
-                                            <th width="25%">{{ __('Start Date') }}</th>
-                                            <th width="25%">{{ __('End Date') }}</th>
+                                            <th width="20%">{{ __('Plan Name') }}</th>
+                                            <th width="20%">{{ __('Type') }}</th>
+                                            <th width="20%">{{ __('Start Date') }}</th>
+                                            <th width="20%">{{ __('End Date') }}</th>
+                                            <th width="20%">{{ __('Invoice') }}</th>
                                         </tr>
                                     </thead>
 
@@ -125,6 +126,22 @@
                                                 <td>{{ ucwords($history?->subscriptionPlan?->expiration_date) }}</td>
                                                 <td>{{ $history->start_date }}</td>
                                                 <td>{{ $history->end_date }}</td>
+                                                <td>
+                                                    @if($history->invoice_pdf && \Illuminate\Support\Facades\Storage::disk('public')->exists($history->invoice_pdf))
+                                                        @php
+                                                            $phone = preg_replace('/[^0-9]/', '', $history->user->phone ?? '');
+                                                            $waLink = 'https://wa.me/' . $phone . '?text=' . urlencode(__('Here is your invoice: ') . asset('storage/' . $history->invoice_pdf));
+                                                        @endphp
+                                                        <a href="{{ asset('storage/' . $history->invoice_pdf) }}" title="{{ __('Download Invoice') }}" target="_blank" style="margin-right:8px;">
+                                                            <i class="fas fa-file-pdf fa-lg text-danger"></i>
+                                                        </a>
+                                                        <a href="{{ $waLink }}" title="{{ __('Share to WhatsApp') }}" target="_blank">
+                                                            <i class="fab fa-whatsapp fa-lg text-success"></i>
+                                                        </a>
+                                                    @else
+                                                        <span class="text-muted">{{ __('No Invoice') }}</span>
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
