@@ -9,9 +9,13 @@ use App\Http\Requests\MemberRequest;
 use App\Services\LockerService;
 use App\Services\MemberService;
 use App\Traits\RedirectHelperTrait;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class MemberController extends Controller
 {
@@ -159,14 +163,34 @@ class MemberController extends Controller
             $data = $request->except('_token');
             $data['status'] = 1;
             $member = $this->memberService->getMemberById($request->member_id);
+            $setting = Cache::get('setting');
 
             // assign subscription
-
             $makeSubscription = $this->memberService->makeSubscription($member, $data);
+
             if ($makeSubscription) {
+                $user = $member->user;
+                $pdf = Pdf::loadView('admin.pages.members.invoice', [
+                    'member' => $member,
+                    'user' => $user,
+                    'makeSubscription' => $makeSubscription,
+                    'setting' => $setting,
+                ]);
+
+                // Store PDF in storage/app/public/invoices/
+                $fileName = 'invoice_' . Str::random(10) . '.pdf';
+                $filePath = 'invoices/' . $fileName;
+                Storage::disk('public')->put($filePath, $pdf->output());
+
+                // Save the invoice path to the subscription history
+                $makeSubscription->invoice_pdf = $filePath;
+                $makeSubscription->save();
+
+                // Redirect back with download link in session
                 return redirect()->back()->with([
-                    'message' => __('Assigned Subscription Plan successfully'),
+                    'message' => __('Subscription assigned and invoice generated.'),
                     'alert-type' => 'success',
+                    'invoice_url' => asset('storage/' . $filePath),
                 ]);
             } else {
                 return $this->redirectWithMessage(RedirectType::ERROR->value, 'admin.members.index', [], [
@@ -181,10 +205,8 @@ class MemberController extends Controller
                 'alert-type' => 'error',
             ]);
         }
-
-        // make subscription history
-
     }
+
 
     public function renewSubscription(AssignSubscriptionRequest $request)
     {
@@ -193,14 +215,34 @@ class MemberController extends Controller
             $data = $request->except('_token');
             $data['status'] = 1;
             $member = $this->memberService->getMemberById($request->member_id);
-
+            $setting = Cache::get('setting');
 
             // renew subscription
             $makeSubscription = $this->memberService->makeSubscription($member, $data);
+
             if ($makeSubscription) {
+                $user = $member->user;
+                $pdf = Pdf::loadView('admin.pages.members.invoice', [
+                    'member' => $member,
+                    'user' => $user,
+                    'makeSubscription' => $makeSubscription,
+                    'setting' => $setting,
+                ]);
+
+                // Store PDF in storage/app/public/invoices/
+                $fileName = 'invoice_' . \Illuminate\Support\Str::random(10) . '.pdf';
+                $filePath = 'invoices/' . $fileName;
+                \Illuminate\Support\Facades\Storage::disk('public')->put($filePath, $pdf->output());
+
+                // Save the invoice path to the subscription history
+                $makeSubscription->invoice_pdf = $filePath;
+                $makeSubscription->save();
+
+                // Redirect back with download link in session
                 return redirect()->back()->with([
-                    'message' => __('Renewed Subscription Plan successfully'),
+                    'message' => __('Subscription renewed and invoice generated.'),
                     'alert-type' => 'success',
+                    'invoice_url' => asset('storage/' . $filePath),
                 ]);
             } else {
                 return $this->redirectWithMessage(RedirectType::ERROR->value, 'admin.members.index', [], [
